@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    "git-tag"
+  ],
+  "owner": "OpenLabsX",
+  "repo": "CLI",
+  "name": "Adam Hassan",
+  "email": "adamkadaban@gmail.com"
+}
