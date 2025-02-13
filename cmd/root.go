@@ -7,9 +7,9 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-    Use:   "OpenLabs",
-    Short: "OpenLabs CLI",
-    Long: "openlabs",
+    Use:   "openlabs",
+    Short: "A command line interface for managing OpenLabs",
+    Long: "OpenLabs CLI is a command line interface for managing OpenLabs and its associated templates, ranges, and plugins.",
     Run: func(cmd *cobra.Command, args []string) {
         if len(args) == 0{
             cmd.Help()
