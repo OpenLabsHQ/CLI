@@ -9,6 +9,10 @@ import (
     "github.com/spf13/cobra"
 )
 
+type RequestData struct {
+	ID string `json:"id"`
+}
+
 var rangeCmd = &cobra.Command{
     Use:   "range",
     Short: "Deploy, and manage range",
@@ -32,18 +36,21 @@ var deployRangeCmd = &cobra.Command{
     },
 }
 
-func deployRange(rangeIDs []string) error {
+func deployRange(templateIDs []string) error {
     url := "http://localhost:8000/api/v1/ranges/deploy"
 
+    var requestData []RequestData
 
-    requestBody, err := json.Marshal(map[string]interface{}{
-        "range_ids": rangeIDs,
-    })
+    for _, templateID := range templateIDs {
+        requestData = append(requestData, RequestData{ID: templateID})
+    }
+
+    jsonData, err := json.Marshal(requestData)    
     if err != nil {
         return fmt.Errorf("Failed to marshal request body: %s", err)
     }
 
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(requestBody))
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
     if err != nil {
         return fmt.Errorf("Failed to create request: %s", err)
     }
@@ -55,6 +62,12 @@ func deployRange(rangeIDs []string) error {
         return fmt.Errorf("Failed to send request: %s", err)
     }
     defer resp.Body.Close()
+
+    if resp.StatusCode == http.StatusOK {
+        fmt.Println("Range deployed successfully")
+    } else {
+        return fmt.Errorf("Failed to deploy range: %s", resp.Status)
+    }
     
     return nil
 }
