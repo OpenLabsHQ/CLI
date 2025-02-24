@@ -8,6 +8,7 @@ import (
     "encoding/json"
 
     "github.com/spf13/cobra"
+    "github.com/olekukonko/tablewriter"
 )
 
 
@@ -21,6 +22,14 @@ import (
 /templates/hosts/{host_id}
 /templates/hosts
 */
+
+type Template struct {
+	ID       string `json:"id"`
+	Provider string `json:"provider"`
+	Name     string `json:"name"`
+    VPN      bool   `json:"vpn"`
+    VNC      bool   `json:"vnc"`
+}
 
 var templatesCmd = &cobra.Command{
     Use:   "templates",
@@ -62,6 +71,55 @@ var getTemplateCmd = &cobra.Command{
     },
 }
 
+
+var listTemplatesCmd = &cobra.Command{
+    Use:   "list",
+    Short: "List all templates",
+    Long:  "This command will list all templates from the OpenLabs API.",
+    Run: func(cmd *cobra.Command, args []string) {
+        err := listTemplates()
+        if err != nil {
+            fmt.Println(err)
+        }
+    },
+}
+
+func listTemplates() error {
+    url := "http://localhost:8000/api/v1/templates/ranges"
+
+    resp, err := http.Get(url)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+
+    if resp.StatusCode == http.StatusNotFound {
+        return fmt.Errorf("No templates found")
+    }
+
+
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return fmt.Errorf("Failed to read response body: %s", err)
+    }
+
+    var templateData []Template
+    if err := json.Unmarshal(body, &templateData); err != nil {
+        return fmt.Errorf("Failed to unmarshal response: %s", err)
+    }
+
+    table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Template Name", "UUID", "Provider", "VPN", "VPC"})
+
+    for _, t := range templateData {
+        table.Append([]string{t.Name, t.ID, t.Provider, fmt.Sprintf("%t", t.VNC), fmt.Sprintf("%t", t.VPN)})
+    }
+
+    table.Render()
+
+
+    return nil
+}
 
 func getTemplate(rangeID string) error {
     url := fmt.Sprintf("http://localhost:8000/api/v1/templates/ranges/%s", rangeID)
@@ -142,5 +200,6 @@ func uploadTemplate(filePath string) error {
 func init() {
     templatesCmd.AddCommand(uploadTemplateCmd)
     templatesCmd.AddCommand(getTemplateCmd)
+    templatesCmd.AddCommand(listTemplatesCmd)
     rootCmd.AddCommand(templatesCmd)
 }
