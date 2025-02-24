@@ -1,3 +1,15 @@
+# v0.1.1 (Mon Feb 24 2025)
+
+#### 🐛 Bug Fix
+
+- Add template list + range deploy functionality [#5](https://github.com/OpenLabsX/CLI/pull/5) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### Authors: 1
+
+- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
+
+---
+
 # v0.1.0 (Thu Feb 13 2025)
 
 #### 🚀 Enhancement
