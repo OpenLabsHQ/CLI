@@ -1,3 +1,15 @@
+# v0.1.2 (Mon Feb 24 2025)
+
+#### 🐛 Bug Fix
+
+- Add autorelease of golang binaries [#6](https://github.com/OpenLabsX/CLI/pull/6) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### Authors: 1
+
+- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
+
+---
+
 # v0.1.1 (Mon Feb 24 2025)
 
 #### 🐛 Bug Fix
