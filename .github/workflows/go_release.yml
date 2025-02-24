@@ -1,0 +1,41 @@
+name: Build + Release OpenLabs CLI
+on:
+  push:
+    branches:
+      - main
+
+permissions: write-all
+jobs:
+  test:
+    name: Build & Test
+    strategy:
+      matrix:
+        go-version: ["stable"] # '1.16', '1.17', '1.18,
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go-version }}
+          check-latest: true
+      - name: Build
+        run: go build -v -o /dev/null .
+  release_binaries:
+    name: Release Binaries
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: goreleaser
+        if: success()
+        uses: docker://goreleaser/goreleaser:latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: release --config .github/goreleaser.yml
