@@ -1,3 +1,15 @@
+# v0.1.3 (Sat Mar 08 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Update .autorc ([@alexchristy](https://github.com/alexchristy))
+
+#### Authors: 1
+
+- Alex Christy ([@alexchristy](https://github.com/alexchristy))
+
+---
+
 # v0.1.2 (Mon Feb 24 2025)
 
 #### 🐛 Bug Fix
