@@ -45,7 +45,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: go.mod
+          go-version: 1.19
           cache: true
 
       - name: Run GoReleaser
