@@ -1,3 +1,15 @@
+# v0.2.0 (Wed Mar 12 2025)
+
+#### 🚀 Enhancement
+
+- CLI working for v0.7.1 [#8](https://github.com/OpenLabsHQ/CLI/pull/8) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### Authors: 1
+
+- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
+
+---
+
 # v0.1.2 (Mon Feb 24 2025)
 
 #### 🐛 Bug Fix
