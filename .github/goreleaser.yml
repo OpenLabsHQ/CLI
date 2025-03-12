@@ -1,6 +1,6 @@
 # test this file with
 #   goreleaser release --config goreleaser.yml --clean --snapshot
-version: 2
+version: 1
 builds:
   - env:
       - CGO_ENABLED=0
@@ -68,7 +68,6 @@ snapshot:
 release:
   draft: false
   prerelease: auto
-  mode: replace
 
 changelog:
   sort: asc
