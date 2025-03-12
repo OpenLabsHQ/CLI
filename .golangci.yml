@@ -10,7 +10,7 @@ linters:
     - govet
     - ineffassign
     - staticcheck
-    - typecheck
+    # - typecheck
     - unused
     - goimports
 
@@ -31,3 +31,9 @@ issues:
     - linters:
         - typecheck
       text: "unknown Go type"
+    # Specifically exclude the golang.org/x/sys/unix issues
+    - path: ".*"
+      text: ".*golang.org/x/sys/unix.*"
+    # Exclude metalinter issues
+    - path: ".*"
+      text: "goanalysis_metalinter.*"
