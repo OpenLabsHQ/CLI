@@ -1,7 +1,7 @@
 package main
 
-import "github.com/OpenLabsX/CLI/cmd"
+import "github.com/OpenLabsHQ/CLI/cmd"
 
 func main() {
-    cmd.Execute()
+	cmd.Execute()
 }
