@@ -25,7 +25,7 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           version: latest
-          args: --timeout=5m
+          args: --timeout=5m --config=.golangci.yml
           # Require lint to pass for PR to be mergeable
           only-new-issues: false
           # Report all errors, not just new ones

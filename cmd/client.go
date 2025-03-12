@@ -35,8 +35,8 @@ func NewClient() *Client {
 
 	// Load current config to ensure we have the latest tokens
 	config, err := loadConfig()
-	currentAuthToken := authToken
-	currentEncKey := encKey
+	currentAuthToken := AuthToken
+	currentEncKey := EncKey
 
 	if err == nil {
 		// Prefer config values over global variables
@@ -48,13 +48,13 @@ func NewClient() *Client {
 		}
 	}
 
-	if debug {
+	if Debug {
 		fmt.Printf("DEBUG: Creating new client with auth token length: %d\n", len(currentAuthToken))
 		fmt.Printf("DEBUG: Creating new client with enc key length: %d\n", len(currentEncKey))
 	}
 
 	return &Client{
-		BaseURL:    apiURL,
+		BaseURL:    APIURL,
 		AuthToken:  currentAuthToken,
 		EncKey:     currentEncKey,
 		HTTPClient: httpClient,
@@ -107,12 +107,12 @@ func (c *Client) DoRequest(method, path string, body interface{}) (*http.Respons
 			req.AddCookie(authCookie)
 		}
 
-		if debug {
+		if Debug {
 			fmt.Printf("DEBUG: Added auth cookies with token: %s\n", c.AuthToken)
 			fmt.Printf("DEBUG: Token length: %d\n", len(c.AuthToken))
 		}
 	} else {
-		if debug {
+		if Debug {
 			fmt.Println("DEBUG: No auth token available for cookies")
 		}
 	}
@@ -129,7 +129,7 @@ func (c *Client) DoRequest(method, path string, body interface{}) (*http.Respons
 		}
 		req.AddCookie(encKeyCookie)
 
-		if debug {
+		if Debug {
 			fmt.Printf("DEBUG: Added enc_key cookie with value: %s\n", c.EncKey)
 		}
 	}
@@ -138,13 +138,13 @@ func (c *Client) DoRequest(method, path string, body interface{}) (*http.Respons
 	if c.AuthToken != "" {
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.AuthToken))
 
-		if debug {
+		if Debug {
 			fmt.Println("DEBUG: Also added fallback Authorization header")
 		}
 	}
 
 	// Debug cookies
-	if debug {
+	if Debug {
 		parsedURL, _ := url.Parse(requestURL)
 		if c.CookieJar != nil {
 			cookies := c.CookieJar.Cookies(parsedURL)
@@ -158,8 +158,8 @@ func (c *Client) DoRequest(method, path string, body interface{}) (*http.Respons
 		}
 	}
 
-	// Print debug information if enabled
-	if debug {
+	// Print Debug information if enabled
+	if Debug {
 		fmt.Printf("\n--- DEBUG: REQUEST ---\n")
 		fmt.Printf("URL: %s %s\n", method, requestURL)
 		fmt.Printf("Headers:\n")
@@ -180,8 +180,8 @@ func (c *Client) DoRequest(method, path string, body interface{}) (*http.Respons
 	// Store cookies for later access
 	c.LastCookies = resp.Cookies()
 
-	// Print debug information for response if enabled
-	if debug {
+	// Print Debug information for response if enabled
+	if Debug {
 		fmt.Printf("\n--- DEBUG: RESPONSE ---\n")
 		fmt.Printf("Status: %s\n", resp.Status)
 		fmt.Printf("Headers:\n")
@@ -194,7 +194,7 @@ func (c *Client) DoRequest(method, path string, body interface{}) (*http.Respons
 		}
 
 		// Don't read the body here as it will consume the reader
-		// Instead, we'll debug output in the ParseResponse function
+		// Instead, we'll Debug output in the ParseResponse function
 		fmt.Printf("----------------------\n")
 	}
 
@@ -209,7 +209,7 @@ func ParseResponse(resp *http.Response, result interface{}) error {
 	}
 
 	// Debug output for response body
-	if debug && len(body) > 0 {
+	if Debug && len(body) > 0 {
 		fmt.Printf("\n--- DEBUG: RESPONSE BODY ---\n")
 		// Try to pretty print JSON if possible
 		var prettyJSON bytes.Buffer

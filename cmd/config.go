@@ -179,7 +179,7 @@ func setAuthToken(token string) error {
 	}
 
 	config.AuthToken = token
-	authToken = token
+	AuthToken = token
 
 	if err := saveConfig(config); err != nil {
 		return err
@@ -196,7 +196,7 @@ func setEncryptionKey(key string) error {
 	}
 
 	config.EncKey = key
-	encKey = key
+	EncKey = key
 
 	if err := saveConfig(config); err != nil {
 		return err
@@ -217,8 +217,8 @@ func init() {
 	// Load config at startup
 	config, err := loadConfig()
 	if err == nil {
-		apiURL = config.APIURL
-		authToken = config.AuthToken
-		encKey = config.EncKey
+		APIURL = config.APIURL
+		AuthToken = config.AuthToken
+		EncKey = config.EncKey
 	}
 }

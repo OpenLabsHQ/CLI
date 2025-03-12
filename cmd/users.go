@@ -162,7 +162,7 @@ var updatePasswordCmd = &cobra.Command{
 func login(email, password string) error {
 	fmt.Println("\n🔒 Authenticating...")
 
-	if debug {
+	if Debug {
 		fmt.Printf("DEBUG: Logging in with email: %s\n", email)
 	}
 
@@ -190,7 +190,7 @@ func login(email, password string) error {
 
 	req.Header.Set("Content-Type", "application/json")
 
-	if debug {
+	if Debug {
 		fmt.Printf("DEBUG: Making direct login request to %s\n", url)
 	}
 
@@ -200,7 +200,7 @@ func login(email, password string) error {
 	}
 	defer resp.Body.Close()
 
-	if debug {
+	if Debug {
 		fmt.Printf("DEBUG: Login response status: %s\n", resp.Status)
 		fmt.Println("DEBUG: Login response headers:")
 		for k, v := range resp.Header {
@@ -230,13 +230,13 @@ func login(email, password string) error {
 		tokenFound := false
 
 		// Look for the token and encryption key in response cookies
-		if debug {
+		if Debug {
 			fmt.Println("\nDEBUG: Examining response cookies directly (more reliable)...")
 		}
 
 		// Use resp.Cookies() which gives us more reliable access to cookies
 		for _, cookie := range resp.Cookies() {
-			if debug {
+			if Debug {
 				fmt.Printf("DEBUG: Response Cookie: %s = %s (HttpOnly: %t)\n",
 					cookie.Name, cookie.Value, cookie.HttpOnly)
 			}
@@ -245,14 +245,14 @@ func login(email, password string) error {
 				cookie.Name == "jwt" || cookie.Name == "token" || cookie.Name == "auth_token" {
 				config.AuthToken = cookie.Value
 				tokenFound = true
-				if debug {
+				if Debug {
 					fmt.Printf("DEBUG: Found auth token in cookie '%s': %s\n", cookie.Name, cookie.Value)
 				}
 			}
 			if cookie.Name == "enc_key" {
 				config.EncKey = cookie.Value
 				fmt.Println("Encryption key stored successfully from cookie.")
-				if debug {
+				if Debug {
 					fmt.Printf("DEBUG: Found encryption key in cookie: %s\n", config.EncKey)
 				}
 			}
@@ -260,13 +260,13 @@ func login(email, password string) error {
 
 		// Also check Set-Cookie headers directly - sometimes needed for HTTP-only cookies
 		if !tokenFound {
-			if debug {
+			if Debug {
 				fmt.Println("\nDEBUG: No token found in cookies, checking Set-Cookie headers...")
 			}
 
 			setCookieHeaders := resp.Header["Set-Cookie"]
 			for _, setCookie := range setCookieHeaders {
-				if debug {
+				if Debug {
 					fmt.Printf("DEBUG: Set-Cookie header: %s\n", setCookie)
 				}
 
@@ -282,7 +282,7 @@ func login(email, password string) error {
 							name == "jwt" || name == "token" || name == "auth_token" {
 							config.AuthToken = value
 							tokenFound = true
-							if debug {
+							if Debug {
 								fmt.Printf("DEBUG: Found auth token in Set-Cookie header '%s': %s\n", name, value)
 							}
 						}
@@ -303,18 +303,18 @@ func login(email, password string) error {
 		// Create a new body for future reads
 		resp.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 
-		if debug {
+		if Debug {
 			fmt.Println("\nDEBUG: Examining response body for tokens...")
 			fmt.Printf("DEBUG: Response body: %s\n", string(bodyBytes))
 		}
 
 		if err := json.Unmarshal(bodyBytes, &responseBody); err == nil {
 			// Look for encryption key
-			if encKeyVal, ok := responseBody["enc_key"]; ok && encKeyVal != nil {
-				if encKeyStr, ok := encKeyVal.(string); ok && encKeyStr != "" {
-					config.EncKey = encKeyStr
+			if EncKeyVal, ok := responseBody["enc_key"]; ok && EncKeyVal != nil {
+				if EncKeyStr, ok := EncKeyVal.(string); ok && EncKeyStr != "" {
+					config.EncKey = EncKeyStr
 					fmt.Println("Encryption key stored successfully from response body.")
-					if debug {
+					if Debug {
 						fmt.Printf("DEBUG: Found encryption key in body: %s\n", config.EncKey)
 					}
 				}
@@ -327,7 +327,7 @@ func login(email, password string) error {
 						config.AuthToken = tokenStr
 						tokenFound = true
 						fmt.Println("Authentication token stored successfully from response body.")
-						if debug {
+						if Debug {
 							fmt.Printf("DEBUG: Found auth token in response body field '%s'\n", field)
 						}
 						break
@@ -361,20 +361,20 @@ func login(email, password string) error {
 
 		// Final fallback: Check for auth token in Authorization header
 		if !tokenFound {
-			if debug {
+			if Debug {
 				fmt.Println("\nDEBUG: No token found yet, checking Authorization header...")
 			}
 
 			authHeaders := resp.Header["Authorization"]
 			for _, authHeader := range authHeaders {
-				if debug {
+				if Debug {
 					fmt.Printf("DEBUG: Authorization header: %s\n", authHeader)
 				}
 
 				if strings.HasPrefix(authHeader, "Bearer ") {
 					config.AuthToken = strings.TrimPrefix(authHeader, "Bearer ")
 					tokenFound = true
-					if debug {
+					if Debug {
 						fmt.Printf("DEBUG: Found auth token in Authorization header: %s\n", config.AuthToken)
 					}
 				}
@@ -383,7 +383,7 @@ func login(email, password string) error {
 
 		// As a last resort, try any header that might contain a token
 		if !tokenFound {
-			if debug {
+			if Debug {
 				fmt.Println("\nDEBUG: Trying headers with 'token' in the name...")
 			}
 
@@ -397,7 +397,7 @@ func login(email, password string) error {
 						value = strings.TrimPrefix(value, "Bearer ")
 						config.AuthToken = value
 						tokenFound = true
-						if debug {
+						if Debug {
 							fmt.Printf("DEBUG: Found potential auth token in header '%s': %s\n", headerName, value)
 						}
 						break
@@ -408,19 +408,19 @@ func login(email, password string) error {
 
 		// Update global tokens
 		if tokenFound {
-			authToken = config.AuthToken
+			AuthToken = config.AuthToken
 			fmt.Println("Authentication token stored successfully.")
 		} else {
 			// Try to manually generate a token if needed (special case)
-			authToken = "manual-token-for-testing"
-			config.AuthToken = authToken
+			AuthToken = "manual-token-for-testing"
+			config.AuthToken = AuthToken
 			fmt.Println("WARNING: No token found! Using a dummy token for testing.")
 			fmt.Println("This is for debugging only and may not work in production.")
 		}
 
 		// Update encryption key in global variable
 		if config.EncKey != "" {
-			encKey = config.EncKey
+			EncKey = config.EncKey
 		}
 
 		// Save the configuration
@@ -481,8 +481,8 @@ func logout() error {
 	}
 
 	// Update global variables
-	authToken = ""
-	encKey = ""
+	AuthToken = ""
+	EncKey = ""
 
 	// Try to call the logout API
 	client := NewClient()
