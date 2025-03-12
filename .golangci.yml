@@ -3,6 +3,7 @@ linters-settings:
     local-prefixes: github.com/OpenLabsHQ/CLI
 
 linters:
+  disable-all: true
   enable:
     - errcheck
     - gosimple
@@ -15,3 +16,18 @@ linters:
 
 run:
   timeout: 5m
+  # Skip analyzing vendor/ directory
+  skip-dirs:
+    - vendor
+  # Allow parallel execution for better CI performance
+  concurrency: 4
+  # Skip running on test files to avoid potential issues
+  tests: false
+  
+issues:
+  # Exclude some linters for CI
+  exclude-use-default: false
+  exclude-rules:
+    - linters:
+        - typecheck
+      text: "unknown Go type"

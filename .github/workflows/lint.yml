@@ -21,11 +21,16 @@ jobs:
           go-version-file: go.mod
           cache: true
 
+      - name: Download dependencies
+        run: |
+          go mod download
+          go mod tidy
+
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
-          version: latest
-          args: --timeout=5m --config=.golangci.yml
+          version: v1.53.3
+          args: --timeout=5m --config=.golangci.yml --out-format=colored-line-number
           # Require lint to pass for PR to be mergeable
           only-new-issues: false
           # Report all errors, not just new ones
