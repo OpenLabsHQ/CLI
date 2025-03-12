@@ -198,7 +198,12 @@ func login(email, password string) error {
 	if err != nil {
 		return fmt.Errorf("login request failed: %s", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	if Debug {
 		fmt.Printf("DEBUG: Login response status: %s\n", resp.Status)
@@ -298,7 +303,9 @@ func login(email, password string) error {
 		// Check if tokens might be in response body
 		var responseBody map[string]interface{}
 		bodyBytes, _ := io.ReadAll(resp.Body)
-		resp.Body.Close()
+		if err := resp.Body.Close(); err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
 
 		// Create a new body for future reads
 		resp.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
@@ -448,7 +455,12 @@ func register(email, password, name string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result struct {
 		ID string `json:"id"`
@@ -491,7 +503,12 @@ func logout() error {
 		fmt.Println("\n⚠️ Could not connect to API for logout, but local tokens have been cleared.")
 		return nil
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result struct {
 		Success bool `json:"success"`
@@ -516,7 +533,12 @@ func getUserInfo() error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var userInfo UserInfo
 	if err := ParseResponse(resp, &userInfo); err != nil {
@@ -548,7 +570,12 @@ func getUserInfo() error {
 	client = NewClient()
 	resp, err = client.DoRequest("GET", "/api/v1/users/me/secrets", nil)
 	if err == nil {
-		defer resp.Body.Close()
+		defer func() {
+			err := resp.Body.Close()
+			if err != nil {
+				fmt.Printf("Error closing response body: %v\n", err)
+			}
+		}()
 
 		var secrets UserSecrets
 		if err := ParseResponse(resp, &secrets); err == nil {
@@ -590,7 +617,12 @@ func updatePassword(currentPassword, newPassword string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result struct {
 		Message string `json:"message"`
@@ -609,7 +641,12 @@ func updatePassword(currentPassword, newPassword string) error {
 			fmt.Println("\nAuto-login failed to get user information. Please login manually with the new password.")
 			return nil
 		}
-		defer userResp.Body.Close()
+		defer func() {
+			err := userResp.Body.Close()
+			if err != nil {
+				fmt.Printf("Error closing response body: %v\n", err)
+			}
+		}()
 
 		var userInfo UserInfo
 		if err := ParseResponse(userResp, &userInfo); err != nil {

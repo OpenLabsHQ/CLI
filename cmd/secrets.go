@@ -224,7 +224,12 @@ func getSecretsStatus() error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var secrets UserSecrets
 	if err := ParseResponse(resp, &secrets); err != nil {
@@ -282,7 +287,12 @@ func updateAWSSecrets(accessKey, secretKey string) error {
 	if err != nil {
 		return fmt.Errorf("failed to update AWS credentials: %s", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	// Check for response message
 	var result struct {
@@ -318,7 +328,12 @@ func updateAzureSecrets(clientID, clientSecret, tenantID, subscriptionID string)
 	if err != nil {
 		return fmt.Errorf("failed to update Azure credentials: %s", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	// Check for response message
 	var result struct {

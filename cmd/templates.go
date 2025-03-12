@@ -293,7 +293,12 @@ func listRangeTemplates() error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var templates []Template
 	if err := ParseResponse(resp, &templates); err != nil {
@@ -328,7 +333,12 @@ func getRangeTemplate(id string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var template map[string]interface{}
 	if err := ParseResponse(resp, &template); err != nil {
@@ -360,7 +370,12 @@ func uploadRangeTemplate(filePath string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result TemplateID
 	if err := ParseResponse(resp, &result); err != nil {
@@ -377,7 +392,12 @@ func deleteRangeTemplate(id string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result bool
 	if err := ParseResponse(resp, &result); err != nil {
@@ -404,7 +424,12 @@ func listVPCTemplates(standaloneOnly bool) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var templates []VPCTemplate
 	if err := ParseResponse(resp, &templates); err != nil {
@@ -437,7 +462,12 @@ func getVPCTemplate(id string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var template map[string]interface{}
 	if err := ParseResponse(resp, &template); err != nil {
@@ -469,7 +499,12 @@ func uploadVPCTemplate(filePath string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result TemplateID
 	if err := ParseResponse(resp, &result); err != nil {
@@ -486,7 +521,12 @@ func deleteVPCTemplate(id string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result bool
 	if err := ParseResponse(resp, &result); err != nil {
@@ -513,7 +553,12 @@ func listSubnetTemplates(standaloneOnly bool) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var templates []SubnetTemplate
 	if err := ParseResponse(resp, &templates); err != nil {
@@ -546,7 +591,12 @@ func getSubnetTemplate(id string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var template map[string]interface{}
 	if err := ParseResponse(resp, &template); err != nil {
@@ -578,7 +628,12 @@ func uploadSubnetTemplate(filePath string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result TemplateID
 	if err := ParseResponse(resp, &result); err != nil {
@@ -595,7 +650,12 @@ func deleteSubnetTemplate(id string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result bool
 	if err := ParseResponse(resp, &result); err != nil {
@@ -622,7 +682,12 @@ func listHostTemplates(standaloneOnly bool) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var templates []HostTemplate
 	if err := ParseResponse(resp, &templates); err != nil {
@@ -658,7 +723,12 @@ func getHostTemplate(id string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var template map[string]interface{}
 	if err := ParseResponse(resp, &template); err != nil {
@@ -690,7 +760,12 @@ func uploadHostTemplate(filePath string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result TemplateID
 	if err := ParseResponse(resp, &result); err != nil {
@@ -707,7 +782,12 @@ func deleteHostTemplate(id string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	var result bool
 	if err := ParseResponse(resp, &result); err != nil {

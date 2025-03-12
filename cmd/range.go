@@ -44,7 +44,12 @@ func deployRange(templateIDs []string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
 	// Response is a deployment status object
 	var result map[string]interface{}
