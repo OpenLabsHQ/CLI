@@ -2,7 +2,7 @@
   "plugins": [
     "git-tag"
   ],
-  "owner": "OpenLabsX",
+  "owner": "OpenLabsHQ",
   "repo": "CLI",
   "name": "Adam Hassan",
   "email": "adamkadaban@gmail.com"

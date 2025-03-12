@@ -1,79 +1,75 @@
 package cmd
 
 import (
-    "fmt"
-    "net/http"
-    "encoding/json"
-    "bytes"
+	"fmt"
 
-    "github.com/spf13/cobra"
+	"github.com/spf13/cobra"
 )
 
-type RequestData struct {
+// Structures for range commands.
+type RangeDeployRequest struct {
 	ID string `json:"id"`
 }
 
+// Range Commands.
 var rangeCmd = &cobra.Command{
-    Use:   "range",
-    Short: "Deploy, and manage range",
-    Long:  "This command will let you deploy, power on/off, and manage your range.",
+	Use:   "range",
+	Short: "Deploy and manage ranges",
+	Long:  "This command will let you deploy, power on/off, and manage your ranges.",
 }
 
 var deployRangeCmd = &cobra.Command{
-    Use:   "deploy",
-    Short: "Deploy a range",
-    Long:  "This command will deploy a range to the OpenLabs API.",
-    Run: func(cmd *cobra.Command, args []string) {
-        if len(args) == 0 {
-            fmt.Println("No range ID provided")
-            return
-        }
-
-        err := deployRange(args)
-        if err != nil {
-            fmt.Println(err)
-        }
-    },
+	Use:   "deploy [range-id...]",
+	Short: "Deploy a range",
+	Long:  "This command will deploy one or more ranges to the OpenLabs API.",
+	Args:  cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		err := deployRange(args)
+		if err != nil {
+			fmt.Println(err)
+		}
+	},
 }
 
+// Ranges Implementation.
 func deployRange(templateIDs []string) error {
-    url := "http://localhost:8000/api/v1/ranges/deploy"
+	// Convert each templateID to a RangeDeployRequest
+	var requests []RangeDeployRequest
+	for _, id := range templateIDs {
+		requests = append(requests, RangeDeployRequest{ID: id})
+	}
 
-    var requestData []RequestData
+	client := NewClient()
+	resp, err := client.DoRequest("POST", "/api/v1/ranges/deploy", requests)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("Error closing response body: %v\n", err)
+		}
+	}()
 
-    for _, templateID := range templateIDs {
-        requestData = append(requestData, RequestData{ID: templateID})
-    }
+	// Response is a deployment status object
+	var result map[string]interface{}
+	if err := ParseResponse(resp, &result); err != nil {
+		return err
+	}
 
-    jsonData, err := json.Marshal(requestData)    
-    if err != nil {
-        return fmt.Errorf("Failed to marshal request body: %s", err)
-    }
+	prettyJSON, err := FormatResponse(result)
+	if err != nil {
+		return err
+	}
 
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return fmt.Errorf("Failed to create request: %s", err)
-    }
-    req.Header.Set("Content-Type", "application/json")
+	fmt.Println("Range deployment initiated successfully")
+	fmt.Println("Deployment status:")
+	fmt.Println(prettyJSON)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return fmt.Errorf("Failed to send request: %s", err)
-    }
-    defer resp.Body.Close()
-
-    if resp.StatusCode == http.StatusOK {
-        fmt.Println("Range deployed successfully")
-    } else {
-        return fmt.Errorf("Failed to deploy range: %s", resp.Status)
-    }
-    
-    return nil
+	return nil
 }
 
 func init() {
-    rangeCmd.AddCommand(deployRangeCmd)
-    rootCmd.AddCommand(rangeCmd)
+	rangeCmd.AddCommand(deployRangeCmd)
+	rootCmd.AddCommand(rangeCmd)
 }
-

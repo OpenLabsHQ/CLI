@@ -2,7 +2,7 @@
 
 #### 🐛 Bug Fix
 
-- Add autorelease of golang binaries [#6](https://github.com/OpenLabsX/CLI/pull/6) ([@Adamkadaban](https://github.com/Adamkadaban))
+- Add autorelease of golang binaries [#6](https://github.com/OpenLabsHQ/CLI/pull/6) ([@Adamkadaban](https://github.com/Adamkadaban))
 
 #### Authors: 1
 
@@ -14,7 +14,7 @@
 
 #### 🐛 Bug Fix
 
-- Add template list + range deploy functionality [#5](https://github.com/OpenLabsX/CLI/pull/5) ([@Adamkadaban](https://github.com/Adamkadaban))
+- Add template list + range deploy functionality [#5](https://github.com/OpenLabsHQ/CLI/pull/5) ([@Adamkadaban](https://github.com/Adamkadaban))
 
 #### Authors: 1
 
@@ -26,7 +26,7 @@
 
 #### 🚀 Enhancement
 
-- Initial CLI structure done. [#3](https://github.com/OpenLabsX/CLI/pull/3) ([@Adamkadaban](https://github.com/Adamkadaban))
+- Initial CLI structure done. [#3](https://github.com/OpenLabsHQ/CLI/pull/3) ([@Adamkadaban](https://github.com/Adamkadaban))
 
 #### ⚠️ Pushed to `main`
 
@@ -37,7 +37,7 @@
 
 #### 📝 Documentation
 
-- add auto-release [#2](https://github.com/OpenLabsX/CLI/pull/2) ([@Adamkadaban](https://github.com/Adamkadaban))
+- add auto-release [#2](https://github.com/OpenLabsHQ/CLI/pull/2) ([@Adamkadaban](https://github.com/Adamkadaban))
 
 #### Authors: 1
 
