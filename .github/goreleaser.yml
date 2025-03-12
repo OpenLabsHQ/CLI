@@ -1,10 +1,10 @@
 # test this file with
 #   goreleaser release --config goreleaser.yml --clean --snapshot
-version: 1
+version: 2
 builds:
   - env:
       - CGO_ENABLED=0
-    go: 1.19
+      - GOVERSION=1.19
     ldflags:
       - -s -w -X github.com/OpenLabsHQ/CLI/cmd.version={{.Version}} -X github.com/OpenLabsHQ/CLI/cmd.buildTime={{.Date}}
     flags:

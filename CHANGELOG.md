@@ -1,17 +1,3 @@
-# v0.2.1 (Wed Mar 12 2025)
-
-#### ⚠️ Pushed to `main`
-
-- pin goreleaser to a specific version ([@Adamkadaban](https://github.com/Adamkadaban))
-- change goreleaser config to version 1 ([@Adamkadaban](https://github.com/Adamkadaban))
-- fix workflow to use proper tag path ([@Adamkadaban](https://github.com/Adamkadaban))
-
-#### Authors: 1
-
-- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
-
----
-
 # v0.2.0 (Wed Mar 12 2025)
 
 #### 🚀 Enhancement
