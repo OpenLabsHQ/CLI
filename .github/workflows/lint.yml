@@ -21,15 +21,16 @@ jobs:
           go-version-file: go.mod
           cache: false
 
-      - name: Download dependencies
+      - name: Clean and Download dependencies
         run: |
+          go clean -modcache
           go mod download
           go mod tidy
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.53.3
+          version: v1.50.1
           args: --timeout=5m --config=.golangci.yml
           skip-cache: true
           skip-pkg-cache: true
