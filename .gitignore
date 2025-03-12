@@ -8,6 +8,11 @@
 *.so
 *.dylib
 
+# Project binaries
+openlabs
+openlabs_*
+CLI
+
 # Test binary, built with `go test -c`
 *.test
 
@@ -23,3 +28,7 @@ go.work.sum
 
 # env file
 .env
+
+# act files for testing
+pr_event.json
+tag_event.json
