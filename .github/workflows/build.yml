@@ -5,6 +5,12 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+  workflow_run:
+    workflows: [auto_release]
+    types:
+      - completed
+    branches:
+      - main
 
 permissions:
   contents: write
