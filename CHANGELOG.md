@@ -1,3 +1,15 @@
+# v0.2.2 (Thu Mar 13 2025)
+
+#### 🐛 Bug Fix
+
+- make sure package name is `openlabs` in releases [#9](https://github.com/OpenLabsHQ/CLI/pull/9) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### Authors: 1
+
+- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
+
+---
+
 # v0.2.1 (Thu Mar 13 2025)
 
 #### ⚠️ Pushed to `main`
