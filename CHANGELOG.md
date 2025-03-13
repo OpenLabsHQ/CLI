@@ -1,3 +1,15 @@
+# v0.2.3 (Thu Mar 13 2025)
+
+#### 🐛 Bug Fix
+
+- remove -next suffix from openlabs version [#11](https://github.com/OpenLabsHQ/CLI/pull/11) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### Authors: 1
+
+- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
+
+---
+
 # v0.2.2 (Thu Mar 13 2025)
 
 #### 🐛 Bug Fix
