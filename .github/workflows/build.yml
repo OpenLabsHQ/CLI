@@ -45,14 +45,11 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.23
+          go-version: 1.19
           cache: true
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v5
-        with:
-          distribution: goreleaser
-          version: v2.7.0
-          args: release --clean --config .github/goreleaser.yml
+        run: |
+          curl -sfL https://goreleaser.com/static/run | bash -s -- release --config .github/goreleaser.yml --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
