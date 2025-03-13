@@ -1,3 +1,15 @@
+# v0.2.4 (Thu Mar 13 2025)
+
+#### 🐛 Bug Fix
+
+- Automatically run build workflow after auto_release is done [#13](https://github.com/OpenLabsHQ/CLI/pull/13) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### Authors: 1
+
+- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
+
+---
+
 # v0.2.3 (Thu Mar 13 2025)
 
 #### 🐛 Bug Fix
