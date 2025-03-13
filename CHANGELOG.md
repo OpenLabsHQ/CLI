@@ -1,3 +1,22 @@
+# v0.2.1 (Thu Mar 13 2025)
+
+#### ⚠️ Pushed to `main`
+
+- update to use go1.24.1 ([@Adamkadaban](https://github.com/Adamkadaban))
+- use goreleaser from run script instead of using workflow ([@Adamkadaban](https://github.com/Adamkadaban))
+- set go version to 1.23 to match newest build (2.7.0) ([@Adamkadaban](https://github.com/Adamkadaban))
+- reduce number of build targets ([@Adamkadaban](https://github.com/Adamkadaban))
+- goreleaser to version 2 + pinned to go1.19 ([@Adamkadaban](https://github.com/Adamkadaban))
+- pin goreleaser to a specific version ([@Adamkadaban](https://github.com/Adamkadaban))
+- change goreleaser config to version 1 ([@Adamkadaban](https://github.com/Adamkadaban))
+- fix workflow to use proper tag path ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### Authors: 1
+
+- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
+
+---
+
 # v0.2.0 (Wed Mar 12 2025)
 
 #### 🚀 Enhancement
