@@ -1,6 +1,6 @@
 module github.com/OpenLabsHQ/CLI
 
-go 1.24.1
+go 1.24
 
 require (
 	github.com/olekukonko/tablewriter v0.0.5
