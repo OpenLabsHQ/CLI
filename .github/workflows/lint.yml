@@ -1,0 +1,31 @@
+name: Lint
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  golangci:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+          cache: false
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+
+  verify-lint-passing:
+    name: Verify Lint Passing
+    needs: golangci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint check passed
+        run: echo "All lint checks passed!"
