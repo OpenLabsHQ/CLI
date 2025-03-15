@@ -58,7 +58,7 @@ jobs:
   prepare:
     name: Prepare Release
     needs: [check_pr_labels]
-    if: ${{ needs.check_pr_labels.outputs.skip_build != 'true' || github.event_name != 'workflow_run' }}
+    if: ${{ github.event_name != 'workflow_run' || needs.check_pr_labels.outputs.skip_build != 'true' }}
     runs-on: ubuntu-latest
     outputs:
       tag_name: ${{ steps.get_tag.outputs.tag_name }}
@@ -80,7 +80,7 @@ jobs:
   release:
     name: Create Release
     needs: [check_pr_labels, prepare]
-    if: ${{ needs.check_pr_labels.outputs.skip_build != 'true' || github.event_name != 'workflow_run' }}
+    if: ${{ github.event_name != 'workflow_run' || needs.check_pr_labels.outputs.skip_build != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
