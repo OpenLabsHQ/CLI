@@ -1,3 +1,20 @@
+# v0.2.5 (Sat Mar 15 2025)
+
+#### 🐛 Bug Fix
+
+- set version in go.mod to be correct format [#17](https://github.com/OpenLabsHQ/CLI/pull/17) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### 📝 Documentation
+
+- Allow documentation changes from auto in build workflow [#16](https://github.com/OpenLabsHQ/CLI/pull/16) ([@Adamkadaban](https://github.com/Adamkadaban))
+- Do not run build workflow if caused by PR with documentation tag [#15](https://github.com/OpenLabsHQ/CLI/pull/15) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### Authors: 1
+
+- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
+
+---
+
 # v0.2.4 (Thu Mar 13 2025)
 
 #### 🐛 Bug Fix
