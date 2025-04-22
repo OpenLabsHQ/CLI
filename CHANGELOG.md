@@ -1,3 +1,19 @@
+# v0.2.6 (Tue Apr 22 2025)
+
+#### 🐛 Bug Fix
+
+- cli updates [#20](https://github.com/OpenLabsHQ/CLI/pull/20) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### 📝 Documentation
+
+- add linting workflow + add codeowners [#18](https://github.com/OpenLabsHQ/CLI/pull/18) ([@Adamkadaban](https://github.com/Adamkadaban))
+
+#### Authors: 1
+
+- Adam Hassan ([@Adamkadaban](https://github.com/Adamkadaban))
+
+---
+
 # v0.2.5 (Sat Mar 15 2025)
 
 #### 🐛 Bug Fix
